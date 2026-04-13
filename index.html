@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Textract-Style Data Extraction</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Extracted Fields</h2>
+            <div id="fields-list"></div>
+        </div>
+        <div class="viewer">
+            <div id="pdf-container"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Extraction Interface</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Document Analysis Results</h1>
+        <p>Extracted fields with bounding box overlays</p>
+    </header>
+    <main>
+        <div class="container">
+            <div class="document-view">
+                <h2>Document Pages</h2>
+                <div id="pages-container"></div>
+            </div>
+            <div class="fields-view">
+                <h2>Extracted Fields</h2>
+                <div id="fields-container"></div>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Source SVG Highlighter</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <header class="app-header">
+        <div>
+            <h1>JSON Source SVG Highlighter</h1>
+            <p>Extracts <code>source</code> coordinates from <code>content-understanding.json</code> and highlights them
+                on an SVG page preview.</p>
+        </div>
+    </header>
+    <main class="app-grid">
+        <aside class="sidebar">
+            <section class="panel">
+                <h2>Detected Source Regions</h2>
+                <div id="field-list" class="field-list"></div>
+            </section>
+            <section class="panel status-panel">
+                <h2>Status</h2>
+                <p id="status">Loading JSON…</p>
+            </section>
+        </aside>
+        <section class="viewer">
+            <div class="svg-frame">
+                <div id="svg-canvas"></div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.2.5/svg.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

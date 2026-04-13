@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f3f3;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.field-group {
+  margin-bottom: 20px;
+}
+
+.field-group h3 {
+  margin: 0 0 10px 0;
+  color: #0073bb;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.field-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.3s;
+}
+
+.field-item:hover {
+  background-color: #f0f8ff;
+}
+
+.field-item.selected {
+  background-color: #e6f7ff;
+  border-color: #0073bb;
+}
+
+.field-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.field-value {
+  color: #666;
+  font-size: 12px;
+}
+
+.viewer {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.pdf-page {
+  position: relative;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.pdf-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.bounding-box {
+  position: absolute;
+  border: 2px solid #ff6b35;
+  background-color: rgba(255, 107, 53, 0.1);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.bounding-box.highlighted {
+  border-color: #0073bb;
+  background-color: rgba(0, 115, 187, 0.2);
+}
+
+.confidence-low {
+  border-color: #ff0000;
+}
+
+.confidence-medium {
+  border-color: #ffa500;
+}
+
+.confidence-high {
+  border-color: #00ff00;
+}
