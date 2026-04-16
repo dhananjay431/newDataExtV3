@@ -25,6 +25,12 @@ window.addEventListener("resize", () => {
   }
 });
 
+document.addEventListener("scroll", () => {
+  if (activeLeaderLine) {
+    activeLeaderLine.position();
+  }
+}, true);
+
 async function loadData() {
   try {
     const [jsonResponse, pdfResponse] = await Promise.all([
@@ -147,6 +153,9 @@ function addBoundingBoxes() {
       box.classList.add("confidence-high");
     }
 
+    box.addEventListener("mouseenter", () => handleHover(field.key));
+    box.addEventListener("mouseleave", () => handleUnhover(field.key));
+
     overlay.appendChild(box);
   });
 }
@@ -221,8 +230,8 @@ function populateSidebar() {
       item.appendChild(label);
       item.appendChild(value);
       item.addEventListener("click", () => highlightField(field.key));
-      item.addEventListener("mouseenter", () => hoverField(field.key, item));
-      item.addEventListener("mouseleave", () => unhoverField(field.key));
+      item.addEventListener("mouseenter", () => handleHover(field.key));
+      item.addEventListener("mouseleave", () => handleUnhover(field.key));
       groupDiv.appendChild(item);
     });
 
@@ -251,19 +260,27 @@ function highlightField(key) {
   if (item) item.classList.add("selected");
 }
 
-function hoverField(key, listItem) {
+function handleHover(key) {
   const box = document.getElementById(`box-${key}`);
-  if (box) {
-    box.classList.add("hovered");
-    createHoverLeaderLine(listItem, box);
+  const item = document.querySelector(`[data-key="${key}"]`);
+  
+  if (box) box.classList.add("hovered");
+  if (item) item.classList.add("hovered");
+  
+  if (box && item) {
+    item.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    createHoverLeaderLine(item, box);
   }
 }
 
-function unhoverField(key) {
+function handleUnhover(key) {
   const box = document.getElementById(`box-${key}`);
-  if (box) {
-    box.classList.remove("hovered");
-  }
+  const item = document.querySelector(`[data-key="${key}"]`);
+  
+  if (box) box.classList.remove("hovered");
+  if (item) item.classList.remove("hovered");
+  
   removeHoverLeaderLine();
 }
 
