@@ -101,6 +101,11 @@ body {
   background-color: rgba(0, 115, 187, 0.2);
 }
 
+.bounding-box.hovered {
+  border-color: #00ff00;
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
 .confidence-low {
   border-color: #ff0000;
 }
@@ -111,4 +116,33 @@ body {
 
 .confidence-high {
   border-color: #00ff00;
+}
+
+.markdown-section {
+  padding: 20px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+}
+
+.markdown-section h2 {
+  color: #333;
+  margin-top: 0;
+}
+
+#markdown-content {
+  white-space: pre-wrap;
+  font-family: monospace;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.panel {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
