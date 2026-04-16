@@ -1,0 +1,62 @@
+<div class="container" (scroll)="onScroll()">
+  <aside class="sidebar" (scroll)="onScroll()">
+    <h2>Extracted Fields</h2>
+    <div id="fields-list">
+      <div class="field-group" *ngFor="let group of sidebarGroupKeys">
+        <h3>{{ group }}</h3>
+        <div class="field-item" 
+             *ngFor="let field of sidebarGroups[group]"
+             [attr.data-key]="field.key"
+             [class.selected]="field.selected"
+             [class.hovered]="field.hovered"
+             (click)="highlightField(field.key)"
+             (mouseenter)="handleHover(field.key)"
+             (mouseleave)="handleUnhover(field.key)">
+          <div class="field-label">{{ getLabel(field.key) }}</div>
+          <div class="field-value">{{ field.valueString || field.valueNumber || "N/A" }}</div>
+        </div>
+      </div>
+    </div>
+    <div id="status" *ngIf="!fields.length">Loading…</div>
+  </aside>
+
+  <main class="viewer" (scroll)="onScroll()">
+    <section class="panel">
+      <div class="panel-header">
+        <h2>PDF Viewer</h2>
+        <button id="toggle-checks-btn" (click)="toggleCheckmarks()">
+          {{ showCheckmarks ? 'Hide Checkmarks' : 'Show Checkmarks' }}
+        </button>
+      </div>
+      <div id="pdf-container" [class.show-checks]="showCheckmarks" #pdfContainer></div>
+    </section>
+  </main>
+</div>
+
+<!-- Tooltip Container. Logically here but physically appended onto .overlay when rendering -->
+<div class="bounding-box-tooltip" 
+     [class.visible]="tooltipVisible"
+     [style.left.px]="tooltipLeft"
+     [style.top.px]="tooltipTop"
+     style="transform: translate(-50%, -100%);"
+     (mouseenter)="onTooltipEnter()"
+     (mouseleave)="onTooltipLeave()">
+  <ng-container *ngIf="tooltipField">
+    <div class="tooltip-key">{{ getLabel(tooltipField.key) }}</div>
+    
+    <textarea class="tooltip-value-box" 
+              [value]="tooltipField.valueString || tooltipField.valueNumber || ''"
+              (input)="updateFieldValue(tooltipField, $event)"></textarea>
+              
+    <div class="tooltip-actions">
+      <button class="tooltip-save-btn" 
+              [ngStyle]="saveBtnStyle" 
+              (click)="saveTooltip()">{{ saveBtnText }}</button>
+    </div>
+  </ng-container>
+</div>
+
+<div class="markdown-section">
+  <h2>Document Markdown Content</h2>
+  <div id="markdown-content">{{ markdownContent }}</div>
+</div>

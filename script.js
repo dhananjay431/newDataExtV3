@@ -394,4 +394,20 @@ function hideTooltip() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadData);
+document.addEventListener("DOMContentLoaded", () => {
+  loadData();
+  
+  const toggleChecksBtn = document.getElementById("toggle-checks-btn");
+  if (toggleChecksBtn) {
+    toggleChecksBtn.addEventListener("click", () => {
+      const container = document.getElementById("pdf-container");
+      container.classList.toggle("show-checks");
+      
+      if (container.classList.contains("show-checks")) {
+        toggleChecksBtn.textContent = "Hide Checkmarks";
+      } else {
+        toggleChecksBtn.textContent = "Show Checkmarks";
+      }
+    });
+  }
+});
