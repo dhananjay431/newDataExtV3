@@ -109,15 +109,18 @@ body {
 }
 
 .confidence-low {
-  border-color: #ff0000;
+  border: none;
+  background-color: rgba(255, 0, 0, 0.2);
 }
 
 .confidence-medium {
-  border-color: #ffa500;
+  border: none;
+  background-color: rgba(255, 165, 0, 0.2);
 }
 
 .confidence-high {
-  border-color: #00ff00;
+  border: none;
+  background-color: rgba(0, 255, 0, 0.2);
 }
 
 .markdown-section {
