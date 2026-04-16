@@ -18,6 +18,8 @@ let fields = [];
 let overlays = {};
 let pageDimensions = {};
 let activeLeaderLine = null;
+let tooltipHideTimeout = null;
+let tooltipNode = null;
 
 window.addEventListener("resize", () => {
   if (activeLeaderLine) {
@@ -128,6 +130,7 @@ async function renderPDF() {
 }
 
 function addBoundingBoxes() {
+  console.log(fields);
   fields.forEach((field) => {
     if (!field.sourceData) return;
 
@@ -261,6 +264,7 @@ function highlightField(key) {
 }
 
 function handleHover(key) {
+  clearTimeout(tooltipHideTimeout);
   const box = document.getElementById(`box-${key}`);
   const item = document.querySelector(`[data-key="${key}"]`);
   
@@ -272,6 +276,8 @@ function handleHover(key) {
     box.scrollIntoView({ behavior: "smooth", block: "nearest" });
     createHoverLeaderLine(item, box);
   }
+
+  showTooltip(key, box);
 }
 
 function handleUnhover(key) {
@@ -282,6 +288,10 @@ function handleUnhover(key) {
   if (item) item.classList.remove("hovered");
   
   removeHoverLeaderLine();
+  
+  tooltipHideTimeout = setTimeout(() => {
+    hideTooltip();
+  }, 200);
 }
 
 function createHoverLeaderLine(startElement, endElement) {
@@ -305,6 +315,82 @@ function removeHoverLeaderLine() {
   if (activeLeaderLine) {
     activeLeaderLine.remove();
     activeLeaderLine = null;
+  }
+}
+
+function showTooltip(key, boxElement) {
+  if (!boxElement) return;
+
+  const field = fields.find(f => f.key === key);
+  if (!field) return;
+
+  const value = field.valueString || field.valueNumber || "N/A";
+
+  if (!tooltipNode) {
+    tooltipNode = document.createElement("div");
+    tooltipNode.className = "bounding-box-tooltip";
+    
+    tooltipNode.addEventListener("mouseenter", () => {
+      clearTimeout(tooltipHideTimeout);
+    });
+    tooltipNode.addEventListener("mouseleave", () => {
+      tooltipHideTimeout = setTimeout(() => {
+        hideTooltip();
+      }, 200);
+    });
+  }
+
+  tooltipNode.innerHTML = `
+    <div class="tooltip-key">${field.key.split('.').pop()}</div>
+    <textarea class="tooltip-value-box">${value}</textarea>
+    <div class="tooltip-actions">
+      <button class="tooltip-save-btn">Save</button>
+    </div>
+  `;
+
+  const textbox = tooltipNode.querySelector('.tooltip-value-box');
+  const saveBtn = tooltipNode.querySelector('.tooltip-save-btn');
+  
+  saveBtn.addEventListener('click', () => {
+    // Update internal data
+    field.valueString = textbox.value;
+    
+    // Update sidebar UI
+    const item = document.querySelector(`[data-key="${key}"]`);
+    if (item) {
+      const valueEl = item.querySelector('.field-value');
+      if (valueEl) valueEl.textContent = textbox.value;
+    }
+    
+    // UI Feedback
+    saveBtn.textContent = "Saved!";
+    saveBtn.style.backgroundColor = "#28a745";
+    
+    setTimeout(() => {
+      hideTooltip();
+      saveBtn.textContent = "Save";
+      saveBtn.style.backgroundColor = "";
+    }, 600);
+  });
+
+  tooltipNode.classList.add("visible");
+  
+  const pageOverlay = boxElement.closest('.pdf-page').querySelector('.overlay');
+  if (tooltipNode.parentElement !== pageOverlay) {
+    pageOverlay.appendChild(tooltipNode);
+  }
+  
+  const left = parseFloat(boxElement.style.left) + parseFloat(boxElement.style.width) / 2;
+  const top = parseFloat(boxElement.style.top);
+
+  tooltipNode.style.left = `${left}px`;
+  tooltipNode.style.top = `${top - 8}px`;
+  tooltipNode.style.transform = "translate(-50%, -100%)";
+}
+
+function hideTooltip() {
+  if (tooltipNode) {
+    tooltipNode.classList.remove("visible");
   }
 }
 

@@ -151,3 +151,75 @@ body {
   padding: 18px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
+
+/* Tooltip Styles */
+.bounding-box-tooltip {
+  position: absolute;
+  background: #222;
+  border-radius: 6px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+  pointer-events: auto;
+  width: 250px;
+}
+
+.bounding-box-tooltip.visible {
+  display: block;
+}
+
+.bounding-box-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+}
+
+.tooltip-key {
+  color: #aed581;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+.tooltip-value-box {
+  width: 100%;
+  box-sizing: border-box;
+  background: #111;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 13px;
+  resize: vertical;
+  min-height: 40px;
+  max-height: 100px;
+  font-family: inherit;
+}
+
+.tooltip-actions {
+  text-align: right;
+  margin-top: 8px;
+}
+
+.tooltip-save-btn {
+  background-color: #0073bb;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.tooltip-save-btn:hover {
+  background-color: #005fa3;
+}
